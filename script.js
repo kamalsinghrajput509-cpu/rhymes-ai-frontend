@@ -1,7 +1,7 @@
-const API_URL = "https://rhymes-ai-backend.onrender.com/generate";
+const API_URL = "https://rhymes-ai-backend-1.onrender.com/generate";
 
 async function generateRhyme() {
-    const prompt = document.getElementById("promptInput").value;
+    const prompt = document.getElementById("prompt").value;
     const output = document.getElementById("output");
 
     output.innerText = "Generating... Please wait...";
