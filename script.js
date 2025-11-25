@@ -1,17 +1,24 @@
-const API_URL = "https://rhymes-ai-backend-1.onrender.com/generate";
+const backendURL = "https://rhymes-ai-backend-1.onrender.com";
 
 async function generateRhyme() {
-    const prompt = document.getElementById("prompt").value;
-    const output = document.getElementById("output");
+    const text = document.getElementById("inputText").value;
+    const outputDiv = document.getElementById("output");
 
-    output.innerText = "Generating... Please wait...";
+    outputDiv.innerHTML = "⏳ Generating rhyme... Please wait...";
 
-    const response = await fetch(API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt })
-    });
+    try {
+        const response = await fetch(`${backendURL}/generate`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ prompt: text })
+        });
 
-    const data = await response.json();
-    output.innerText = data.rhyme || "Error generating rhyme!";
+        const data = await response.json();
+
+        outputDiv.innerHTML = data.rhyme || "⚠ Error: No response from backend.";
+    } 
+    catch (error) {
+        outputDiv.innerHTML = "❌ Backend error! Please check console.";
+        console.error(error);
+    }
 }
